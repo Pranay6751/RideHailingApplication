@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rides")
@@ -25,6 +27,11 @@ public class RideController {
     @GetMapping("/getride/{id}")
     public ResponseEntity<RideDTO> getRide(@PathVariable Long id) {
         return ResponseEntity.ok(rideService.getRide(id));
+    }
+
+    @GetMapping("/getallrides")
+    public ResponseEntity<List<RideDTO>> getAllRides() {
+        return ResponseEntity.status(HttpStatus.OK).body(rideService.getAllRides());
     }
 
 }

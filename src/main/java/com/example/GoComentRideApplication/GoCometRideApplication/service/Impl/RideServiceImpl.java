@@ -10,6 +10,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class RideServiceImpl implements RideService {
@@ -27,8 +29,18 @@ public class RideServiceImpl implements RideService {
     }
 
     @Override
-        public RideDTO getRide(Long id) {
+    public RideDTO getRide(Long id) {
         Ride ride = rideRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Ride Id not found "+id));
         return modelMapper.map(ride, RideDTO.class);
     }
+
+    @Override
+    public List<RideDTO> getAllRides(){
+        List<Ride> rideList = rideRepository.findAll();
+        return rideList
+                .stream()
+                .map(ride -> modelMapper.map(ride, RideDTO.class))
+                .toList();
+    }
+
 }
